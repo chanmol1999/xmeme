@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from pydantic import BaseModel	
-import pymongo
 import sqlite3
 
 app = FastAPI()
