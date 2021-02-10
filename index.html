@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>XMeme</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  	.card{
+  		margin:auto;
+  		margin-bottom: 20px;
+  		background: lightblue;
+  	}
+  	#meme{
+  		background: white
+  	}
+  	.container{
+  		margin:auto;
+  		padding: 30px;
+  	}
+  </style>
+</head>
+<body>
+<div class="container" style="border:1px solid #cecece;">
+	<h1 margin="auto">Memeophilia</h1>
+  <form id="prospects_form" onsubmit="memepost()"  >
+    <div class="form-group">
+      <input type="text" id = "name" class="form-control" placeholder="Your Name" name="name">
+    </div>
+    <div class="form-group">
+      <input type="text" id = "url" class="form-control" placeholder="Meme URL" name="url">
+    </div>
+    <div class="form-group">
+      <input type="text" id = "caption" class="form-control" placeholder="Caption" name="caption">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<div class="container" margin="auto" id='meme'>
+</div>
+</body>
+<script type="text/javascript">
+	$("#prospects_form").submit(function(e) {
+    e.preventDefault();
+	});
+	function addmeme(name,caption,url){
+		var meme = document.getElementById('meme')
+		let htmldata =meme.innerHTML;
+		htmldata = htmldata+ `
+			<div class="card" style="width:400px">
+			    <div class="card-body">
+			      <h4 class="card-title">${name}</h4>
+			      <p class="card-text" >${caption}</p>
+			    </div>
+			    <img class="card-img-bottom" src="${url}" alt="Not able to render" style="width:100%">
+	  		</div>`	;
+	  	meme.innerHTML=htmldata;
+
+	}	
+
+	function reload()
+	{
+		var meme = document.getElementById('meme')
+		meme.innerHTML = "";
+		fetch('http://54.172.17.96/memes').then(res => res.json()).then(json =>
+		{
+			console.log(json);
+			var items = json;
+			for(var i=0;i<items.length;i++)
+			{
+				addmeme(items[i].name,items[i].caption,items[i].url)
+			}
+		}).catch(err=> console.error(err));
+
+	}
+	reload();
+	function memepost(){
+		let meme = {
+			name :document.getElementById('name').value,
+			url :document.getElementById('url').value,
+			caption: document.getElementById('caption').value
+		};
+		fetch('http://54.172.17.96/memes', {
+		  method: 'POST',
+		  headers: {
+		    'content-type': 'application/json'
+		  },
+		  body: JSON.stringify(meme)
+		}).then(res => console.log(res.json())).then(res => {
+			$("#prospects_form").reset();
+			reload();
+		}).catch(err => console.log(err));		
+	}
+
+	
+</script>
+</html> 
