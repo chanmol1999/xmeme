@@ -1,11 +1,11 @@
 [[redirects]]
 from = "/memes"
 to = "http://54.172.17.96/memes"
-status = 200
+status = 301
 force = true
 
 [[redirects]]
 from = "/memes/*"
 to = "http://54.172.17.96/memes/:splat"
-status = 200
+status = 301
 force = true
