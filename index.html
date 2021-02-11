@@ -65,7 +65,7 @@
 	{
 		var meme = document.getElementById('meme')
 		meme.innerHTML = "";
-		fetch('http://54.172.17.96/memes').then(res => res.json()).then(json =>
+		fetch('https://54.172.17.96/memes').then(res => res.json()).then(json =>
 		{
 			console.log(json);
 			var items = json;
@@ -83,7 +83,7 @@
 			url :document.getElementById('url').value,
 			caption: document.getElementById('caption').value
 		};
-		fetch('http://54.172.17.96/memes', {
+		fetch('https://54.172.17.96/memes', {
 		  method: 'POST',
 		  headers: {
 		    'content-type': 'application/json'
