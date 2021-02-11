@@ -1,0 +1,5 @@
+[[redirects]]
+from = "https://54.172.17.96/memes/*"
+to = "http://54.172.17.96/memes/"
+status = 200
+force = true
