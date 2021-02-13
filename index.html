@@ -91,7 +91,7 @@
 		  },
 		  body: JSON.stringify(meme)
 		}).then(res => console.log(res.json())).then(res => {
-			$("#prospects_form").reset();
+			document.getElementById("prospects_form").reset();
 			reload();
 		}).catch(err => console.log(err));		
 	}
